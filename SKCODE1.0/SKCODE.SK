@@ -1,0 +1,114 @@
+options:
+	#前缀
+	prefix: &6&lSKCODE&f&l>>>&f
+	group: &a550758123(这里换成您的服务器群)
+
+
+
+
+
+command /skcode.help:
+	trigger:
+		message ""
+		message ""
+		message ""
+		message "&6&l██████████&f&lSKCODE&6&l██████████"
+		message "&r"
+		message "              &f/setcode <邀请码> 设置邀请码"
+		message "              &f/skcode.<邀请码> 认证邀请码"
+		message "              &f/skcode.true <玩家> 添加玩家的认证"
+		message "              &f/skcode.false <玩家> 移除玩家的认证"
+		message "              &f/skcode.about 关于插件"
+		message "              &f/skcode.help 查看帮助"
+		message "              &f/skcode.reload 重载插件"
+		message "&r"
+		message "&6&l██████████&f&lSKCODE&6&l██████████"
+command /skcode.reload:
+	permission: skcode.admin
+	trigger:
+		reload script "skcode"
+		message "&6&lSKCODE&f&l>>>&f插件已重载"
+command /skcode.about:
+	trigger:
+		message ""
+		message ""
+		message ""
+		message "&6&l██████████&f&lSKCODE&6&l██████████"
+		message "&r"
+		message "                     &f作者:LIGH_T"
+		message "         &fbug请到https://discord.gg/fSWTMj7进行反馈"
+		message "                       &f版本1.0"
+		message "&r"
+		message "&6&l██████████&f&lSKCODE&6&l██████████"
+command /setcode <text>:
+	permission: skcode.admin
+	trigger:
+		message "{@prefix}服务器邀请码被设置为:&a%argument%<reset>"
+		set {skcode.code} to argument
+command /skcode <text>:
+    permission: skcode.admin
+    trigger:
+        if argument = {skcode.code}:
+            message "{@prefix}验证成功!祝您游戏愉快!" 
+            set {skcode.%player%} to true
+        else:
+            message "{@prefix}验证失败!请加入QQ群:{@group}&f获取邀请码" 
+command /skcode.true <offline player>:
+	permission: skcode.admin
+	trigger:
+		message "{@prefix}已添加&a%argument%&f的认证状态"
+		set {skcode.%argument%} to true
+command /skcode.false <offline player>:
+	permission: skcode.admin
+	trigger:
+		message "{@prefix}已移除&a%argument%&f的认证状态"
+		set {skcode.%argument%} to false
+
+
+
+on load:
+    send "&6&lSKCODE&f&l>>>&f插件已启动" to the console
+on unload:
+    send "&6&lSKCODE&f&l>>>&f插件已卸载" to the console
+
+
+
+
+
+
+
+
+
+
+
+
+#限制
+on join:
+    if {skcode.%player%} != true:
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
+on break:
+    if {skcode.%player%} != true:
+        cancel event
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
+on place:
+    if {skcode.%player%} != true:
+        cancel event
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
+on bucket empty:
+    if {skcode.%player%} != true:
+        cancel event
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
+on bucket fill:
+    if {skcode.%player%} != true:
+        cancel event
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
+on chat:
+    if {skcode.%player%} != true:
+        cancel event
+        message "{@prefix}请先输入/skcode <邀请码> 通过验证"
+        message "{@prefix}加入QQ群:{@group} 即可获取邀请码"
